@@ -1,17 +1,18 @@
 data class Post(
     val id: Int = 0,
     val ownerId: Int = 0,
-    val fromId: Int  = 0,
-    val createdBy: Int  = 0,
-    val date: Int  = 0,
+    val fromId: Int = 0,
+    val createdBy: Int = 0,
+    val date: Int = 0,
     val text: String,
-    val replyOwnerId: Int  = 0,
-    val replyPostId: Int  = 0,
+    val replyOwnerId: Int = 0,
+    val replyPostId: Int = 0,
     val friendsOnly: Boolean,
     val postType: String,
+    val comments: Comments,
 )
 
-object Comments {
+class Comments {
     private var count = 0
     private var canPost = true
     private var groupsCanPost = true
@@ -43,7 +44,7 @@ object WallService {
 
         for ((index, element) in posts.withIndex()) {
             if (element.id == id) {
-                posts[index] = post.copy(postType = postType)
+                posts[index] = post.copy(postType = postType.toString())
                 return true
             }
         }
@@ -58,14 +59,14 @@ object WallService {
 
 
 fun main() {
-    WallService.add(Post(text ="Hello!", friendsOnly = true, postType = "post"))
-    WallService.add(Post(text ="Hello!", friendsOnly = true, postType = "copy"))
+    WallService.add(Post(text ="Hello!", friendsOnly = true, postType = "post", comments = Comments()))
+    WallService.add(Post(text ="Hello!", friendsOnly = true, postType = "copy", comments = Comments()))
 
     WallService.show()
 
     println("__________________________")
 
-    WallService.update(Post(id = 2, text ="Hello!", friendsOnly = true, postType = "reply"))
+    WallService.update(Post(id = 2, text ="Hello!", friendsOnly = true, postType = "reply", comments = Comments()))
     WallService.show()
 
     println("__________________________")
