@@ -45,4 +45,22 @@ class WallServiceTest {
 
         assertEquals(true, result)
     }
+
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow() {
+        val photo: Attachment = Photo(photo = PhotoAttachment(1, 1, "https://vk.com/some_photo_link", "https://vk.com/some_photo_link"))
+
+        val comment: Comment = Comment(
+            1,
+            4,
+            123,
+            "text",
+            null,
+            arrayOf(photo),
+            null,
+            null
+        )
+
+        WallService.createComment(10, comment)
+    }
 }
