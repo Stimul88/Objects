@@ -46,6 +46,27 @@ class WallServiceTest {
         assertEquals(true, result)
     }
 
+    @Test
+    fun shouldNotThrow() {
+        val photo: Attachment = Photo(photo = PhotoAttachment(1, 1, "https://vk.com/some_photo_link", "https://vk.com/some_photo_link"))
+        WallService.add(Post(text ="Hello!", friendsOnly = true, postType = "post", comments = Comments(), attachment = photo))
+
+        val comment: Comment = Comment(
+            1,
+            4,
+            123,
+            "text",
+            null,
+            arrayOf(photo),
+            null,
+            null
+        )
+
+        val result = WallService.createComment(1, comment)
+
+        assertEquals(comment, result)
+    }
+
     @Test(expected = PostNotFoundException::class)
     fun shouldThrow() {
         val photo: Attachment = Photo(photo = PhotoAttachment(1, 1, "https://vk.com/some_photo_link", "https://vk.com/some_photo_link"))
@@ -64,3 +85,6 @@ class WallServiceTest {
         WallService.createComment(10, comment)
     }
 }
+
+
+
